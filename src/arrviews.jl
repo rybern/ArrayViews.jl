@@ -1,17 +1,17 @@
 ### View types
 
 # use ContiguousView when contiguousness can be determined statically
-immutable ContiguousView{T,N,Arr<:Array} <: ArrayView{T,N,N}
+immutable ContiguousView{T,N,Arr<:DenseArray} <: ArrayView{T,N,N}
     arr::Arr
     offset::Int
     len::Int
     shp::NTuple{N,Int}
 end
 
-ContiguousView{T,N}(arr::Array{T}, offset::Int, shp::NTuple{N,Int}) =
+ContiguousView{T,N}(arr::DenseArray{T}, offset::Int, shp::NTuple{N,Int}) =
     ContiguousView{T,N,typeof(arr)}(arr, offset, prod(shp), shp)
 
-ContiguousView(arr::Array, shp::Dims) = ContiguousView(arr, 0, shp)
+ContiguousView(arr::DenseArray, shp::Dims) = ContiguousView(arr, 0, shp)
 
 
 immutable UnsafeContiguousView{T,N} <: UnsafeArrayView{T,N,N}
@@ -26,9 +26,9 @@ UnsafeContiguousView{T,N}(ptr::Ptr{T}, shp::NTuple{N,Int}) =
 UnsafeContiguousView{T,N}(ptr::Ptr{T}, offset::Int, shp::NTuple{N,Int}) =
     UnsafeContiguousView(ptr+offset*sizeof(T), shp)
 
-UnsafeContiguousView(arr::Array, shp::Dims) = UnsafeContiguousView(pointer(arr), shp)
+UnsafeContiguousView(arr::DenseArray, shp::Dims) = UnsafeContiguousView(pointer(arr), shp)
 
-UnsafeContiguousView{T,N}(arr::Array{T}, offset::Int, shp::NTuple{N,Int}) =
+UnsafeContiguousView{T,N}(arr::DenseArray{T}, offset::Int, shp::NTuple{N,Int}) =
     UnsafeContiguousView(pointer(arr, offset+1), shp)
 
 

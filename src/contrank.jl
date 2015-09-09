@@ -61,11 +61,11 @@ contrank(i1::Subs, i2::Subs, i3::Subs, I::Subs...) = ContRank{0}
 
 # contiguous rank with array & arrayviews
 
-acontrank(a::Array, i1::Subs) = contrank(i1)
-acontrank(a::Array, i1::Subs, i2::Subs) = contrank(i1, i2)
-acontrank(a::Array, i1::Subs, i2::Subs, i3::Subs) = contrank(i1, i2, i3)
-acontrank(a::Array, i1::Subs, i2::Subs, i3::Subs, i4::Subs) = contrank(i1, i2, i3, i4)
-acontrank(a::Array, i1::Subs, i2::Subs, i3::Subs, i4::Subs, i5::Subs, I::Subs...) =
+acontrank(a::DenseArray, i1::Subs) = contrank(i1)
+acontrank(a::DenseArray, i1::Subs, i2::Subs) = contrank(i1, i2)
+acontrank(a::DenseArray, i1::Subs, i2::Subs, i3::Subs) = contrank(i1, i2, i3)
+acontrank(a::DenseArray, i1::Subs, i2::Subs, i3::Subs, i4::Subs) = contrank(i1, i2, i3, i4)
+acontrank(a::DenseArray, i1::Subs, i2::Subs, i3::Subs, i4::Subs, i5::Subs, I::Subs...) =
     contrank(i1, i2, i3, i4, i5, I...)
 
 acontrank{T,N}(a::StridedArrayView{T,N,N}, i1::Subs) = contrank(i1)

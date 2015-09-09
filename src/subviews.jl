@@ -20,12 +20,12 @@ _step(i::Range) = step(i)
 
 # aoffset: offset w.r.t. the underlying array (i.e. parent)
 
-aoffset(a::Union(Array, UnsafeArrayView), i::Subs) = roffset(a, i)
-aoffset(a::Union(Array, UnsafeArrayView), i1::Subs, i2::Subs) = roffset(a, i1, i2)
-aoffset(a::Union(Array, UnsafeArrayView), i1::Subs, i2::Subs, i3::Subs) = roffset(a, i1, i2, i3)
-aoffset(a::Union(Array, UnsafeArrayView), i1::Subs, i2::Subs, i3::Subs, i4::Subs) =
+aoffset(a::Union(DenseArray, UnsafeArrayView), i::Subs) = roffset(a, i)
+aoffset(a::Union(DenseArray, UnsafeArrayView), i1::Subs, i2::Subs) = roffset(a, i1, i2)
+aoffset(a::Union(DenseArray, UnsafeArrayView), i1::Subs, i2::Subs, i3::Subs) = roffset(a, i1, i2, i3)
+aoffset(a::Union(DenseArray, UnsafeArrayView), i1::Subs, i2::Subs, i3::Subs, i4::Subs) =
     roffset(a, i1, i2, i3, i4)
-aoffset(a::Union(Array, UnsafeArrayView), i1::Subs, i2::Subs, i3::Subs, i4::Subs, i5::Subs, I::Subs...) =
+aoffset(a::Union(DenseArray, UnsafeArrayView), i1::Subs, i2::Subs, i3::Subs, i4::Subs, i5::Subs, I::Subs...) =
     roffset(a, i1, i2, i3, i4, i5, I...)
 
 aoffset(a::ArrayView, i::Subs) = a.offset + roffset(a, i)
