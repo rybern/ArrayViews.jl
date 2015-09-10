@@ -35,7 +35,7 @@ UnsafeContiguousView{T,N}(arr::DenseArray{T}, offset::Int, shp::NTuple{N,Int}) =
 
 # use StridedView when contiguousness can not be determined statically
 # condition: M < N
-immutable StridedView{T,N,M,Arr<:Array} <: ArrayView{T,N,M}
+immutable StridedView{T,N,M,Arr<:DenseArray} <: ArrayView{T,N,M}
     arr::Arr
     offset::Int
     len::Int
@@ -43,13 +43,13 @@ immutable StridedView{T,N,M,Arr<:Array} <: ArrayView{T,N,M}
     strides::NTuple{N,Int}
 end
 
-function StridedView{T,N,M}(arr::Array{T}, offset::Int, shp::NTuple{N,Int},
+function StridedView{T,N,M}(arr::DenseArray{T}, offset::Int, shp::NTuple{N,Int},
                              ::Type{ContRank{M}}, strides::NTuple{N,Int})
     @assert M < N
     StridedView{T,N,M,typeof(arr)}(arr, offset, prod(shp), shp, strides)
 end
 
-function StridedView{T,N,M}(arr::Array{T}, shp::NTuple{N,Int},
+function StridedView{T,N,M}(arr::DenseArray{T}, shp::NTuple{N,Int},
                              ::Type{ContRank{M}}, strides::NTuple{N,Int})
     @assert M < N
     StridedView{T,N,M,typeof(arr)}(arr, 0, prod(shp), shp, strides)
